@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>平面图房间识别训练台</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <aside class="control-panel" aria-label="训练输入">
+          <div class="brand-block">
+            <div class="mark" aria-hidden="true">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div>
+              <p class="eyebrow">Room Counter</p>
+              <h1>平面图房间识别训练台</h1>
+            </div>
+          </div>
+
+          <label class="upload-zone" for="planUpload">
+            <input id="planUpload" type="file" accept="image/*" />
+            <span class="upload-icon" aria-hidden="true">+</span>
+            <strong>上传平面图</strong>
+            <small>支持 JPG、PNG、WEBP。系统会先在本地估算房间数量。</small>
+          </label>
+
+          <div class="result-card">
+            <span class="result-label">当前估算</span>
+            <strong id="roomCount">0</strong>
+            <span id="confidenceText">等待上传</span>
+          </div>
+
+          <div class="field-row">
+            <label for="manualCount">人工修正房间数</label>
+            <input id="manualCount" type="number" min="0" step="1" value="0" />
+          </div>
+
+          <button class="primary-action" id="saveSampleBtn" type="button" disabled>
+            记录为训练样本
+          </button>
+
+          <button class="secondary-action" id="downloadBtn" type="button" disabled>
+            导出训练数据
+          </button>
+
+          <div class="status-card" id="statusCard">
+            <span class="status-dot"></span>
+            <p>上传一张平面图开始识别</p>
+          </div>
+        </aside>
+
+        <section class="canvas-panel" aria-label="平面图识别">
+          <div class="panel-head">
+            <div>
+              <p class="eyebrow">Plan Analysis</p>
+              <h2>上传图纸、估算房间、积累训练样本</h2>
+            </div>
+            <span class="sample-badge" id="sampleBadge">0 个样本</span>
+          </div>
+
+          <div class="plan-stage" id="planStage">
+            <div class="blueprint-placeholder" id="placeholder">
+              <div class="mini-plan" aria-hidden="true">
+                <span class="room room-a"></span>
+                <span class="room room-b"></span>
+                <span class="room room-c"></span>
+                <span class="room room-d"></span>
+                <span class="room room-e"></span>
+              </div>
+              <p>上传后会显示原始平面图，并用浅色区域标出疑似房间。</p>
+            </div>
+            <img id="planPreview" alt="已上传的平面图预览" />
+            <canvas id="analysisCanvas" aria-label="房间识别结果"></canvas>
+          </div>
+
+          <div class="analysis-grid">
+            <article>
+              <h3>识别说明</h3>
+              <ul id="analysisList">
+                <li>目前使用浏览器本地算法：寻找被墙体围合的独立空白区域。</li>
+                <li>门洞、开放式客餐厅、低清晰度扫描图会影响结果。</li>
+                <li>你每次手动修正后保存，都会形成一条可用于后续训练的数据。</li>
+              </ul>
+            </article>
+            <article>
+              <h3>训练数据</h3>
+              <div class="sample-list" id="sampleList">
+                <p>还没有样本。上传平面图并修正房间数后，点击记录。</p>
+              </div>
+            </article>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

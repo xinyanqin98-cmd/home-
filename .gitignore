@@ -1,0 +1,7 @@
+preview-runtime.log
+preview.out.log
+preview.err.log
+*.log
+node_modules/
+.DS_Store
+Thumbs.db
